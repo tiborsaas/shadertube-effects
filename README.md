@@ -7,9 +7,8 @@ A collection of shaders that you can enjoy in the ShaderTube Chrome extension.
 You can add your own effects by creating a pull request to this repository. The extension works from the master folder of this repository.
 
 - Checkout a new branch with the name of your effect
-- Create a folder with the name of your effect
-- Copy the `index.html` from the root folder of this repository to that folder
-- Create your shader as `effect.glsl`
+- Create copy of the [sandbox folder](sandbox) with the name of your effect
+- Edit your shader as `effect.glsl`
 
 Finally, serve the contentes of that by a static server:
 
