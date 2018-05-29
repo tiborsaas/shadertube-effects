@@ -21,10 +21,9 @@
     <canvas></canvas>
     <script>
         class ShaderLoader {
-
-            constructor(canvas) {
+            constructor(canvas, fileName) {
                 this.canvas = canvas;
-                this.shaderName = 'effect.glsl';
+                this.shaderName = fileName;
 
                 this.scene = new THREE.Scene();
                 this.camera = new THREE.Camera();
@@ -87,8 +86,10 @@
             }
         }
 
+        /**
+         * Makes the shader tick and connect to DOM
+         */
         class DemoApp {
-
             constructor() {
                 const canvas = document.querySelector('canvas');
                 canvas.style.width = '100%';
@@ -97,7 +98,7 @@
 
                 document.body.appendChild(canvas);
 
-                this.effect = new ShaderLoader(canvas);
+                this.effect = new ShaderLoader(canvas, 'effect.glsl');
                 this.animate();
             }
 
