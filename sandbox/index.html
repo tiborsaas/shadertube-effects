@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ShaderTube effect sandbox</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        class ShaderLoader {
+
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.shaderName = 'effect.glsl';
+
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.Camera();
+                this.camera.position.z = 1;
+
+                this.uniforms = this.getUniforms();
+                this.renderer = this.setupRenderer();
+
+                this.loadShader(shader => {
+                    this.scene.add( this.createMesh(shader) );
+                });
+            }
+
+            setupRenderer() {
+                console.log(this.canvas);
+
+                const renderer = new THREE.WebGLRenderer({
+                    canvas: this.canvas
+                });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                return renderer;
+            }
+
+            render() {
+                this.uniforms.u_resolution.value.x = screen.width * window.devicePixelRatio;
+            	this.uniforms.u_resolution.value.y = screen.height * window.devicePixelRatio;
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            createMesh(shaderProgram) {
+                const geometry = new THREE.PlaneBufferGeometry(2, 2);
+                const vertexShader = "void main() { gl_Position = vec4( position, 1.0 ); }";
+
+                const material = new THREE.ShaderMaterial({
+                    uniforms: this.uniforms,
+                    vertexShader: vertexShader,
+                    fragmentShader: shaderProgram
+                });
+
+                return new THREE.Mesh(geometry, material);
+            }
+
+            getUniforms() {
+                const scaledRatioW = screen.width * window.devicePixelRatio;
+                const scaledRatioH = screen.height * window.devicePixelRatio;
+
+                return {
+                    u_time: { type: "f", value: 1.0 },
+                    u_volume: { type: "f", value: 1.0 },
+                    u_resolution: { type: "v2", value: new THREE.Vector2(scaledRatioW, scaledRatioH) },
+                };
+            }
+
+            loadShader(callback) {
+                const getText = response => {
+                    return response.text();
+                }
+                fetch(this.shaderName).then(getText).then(callback)
+            }
+        }
+
+        class DemoApp {
+
+            constructor() {
+                const canvas = document.querySelector('canvas');
+                canvas.style.width = '100%';
+                canvas.width = canvas.clientWidth;
+                canvas.height = window.innerHeight;
+
+                document.body.appendChild(canvas);
+
+                this.effect = new ShaderLoader(canvas);
+                this.animate();
+            }
+
+            animate() {
+                this.effect.render();
+                requestAnimationFrame( this.animate.bind(this) );
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', e => {
+            const app = new DemoApp();
+        });
+    </script>
+</body>
+</html>
