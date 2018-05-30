@@ -40,3 +40,14 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_volume;
 ```
+
+## Add credits
+
+The Chrome extension displays the effects and the author's name in a music TV like lower third design.
+
+Just add these comments to the top of your `effect.glsl` file:
+
+```
+// Created by: Thales
+// Title: Trianges on the beach
+```
