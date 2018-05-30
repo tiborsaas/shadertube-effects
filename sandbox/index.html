@@ -21,9 +21,9 @@
     <canvas></canvas>
     <script>
         class ShaderLoader {
-            constructor(canvas, fileName) {
+            constructor(canvas, shaderPath) {
                 this.canvas = canvas;
-                this.shaderName = fileName;
+                this.shaderPath = shaderPath;
                 this.time = 0;
 
                 this.scene = new THREE.Scene();
@@ -85,7 +85,7 @@
                 const getText = response => {
                     return response.text();
                 }
-                fetch(this.shaderName).then(getText).then(callback)
+                fetch(this.shaderPath).then(getText).then(callback)
             }
         }
 
