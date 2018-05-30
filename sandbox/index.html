@@ -24,6 +24,7 @@
             constructor(canvas, fileName) {
                 this.canvas = canvas;
                 this.shaderName = fileName;
+                this.time = 0;
 
                 this.scene = new THREE.Scene();
                 this.camera = new THREE.Camera();
@@ -48,8 +49,10 @@
             }
 
             render() {
+                this.time += 0.01;
                 this.uniforms.u_resolution.value.x = screen.width * window.devicePixelRatio;
-            	this.uniforms.u_resolution.value.y = screen.height * window.devicePixelRatio;
+                this.uniforms.u_resolution.value.y = screen.height * window.devicePixelRatio;
+                this.uniforms.u_time.value = this.time;
 
                 this.renderer.render(this.scene, this.camera);
             }
