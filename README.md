@@ -10,14 +10,14 @@ You can add your own effects by creating a pull request to this repository. The 
 - Create copy of the [sandbox folder](sandbox) with the name of your effect
 - Edit your shader as `effect.glsl`
 
-Finally, serve the contentes of that by a static server:
+Finally, serve the contentes of that by a static server to avoid [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) issues.
 
 ```
 npm install http-server -g
 http-server
 ```
 
-which starts a local server to avoid CORS issues:
+which starts a local server at the `8080` port:
 
 ```
 Starting up http-server, serving ./
@@ -38,7 +38,7 @@ precision mediump float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
-uniform float u_volume;
+uniform float u_volume; // not yet implemented
 ```
 
 ## Add credits
@@ -49,5 +49,5 @@ Just add these comments to the top of your `effect.glsl` file:
 
 ```
 // Created by: Thales
-// Title: Trianges on the beach
+// Title: Triangles on the beach
 ```
