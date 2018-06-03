@@ -30,7 +30,7 @@ vec3 shape( in vec2 p )
 		s.y +=  mix( 5.448/d, d, smoothstep( -0.5, 0.5, cos(.5*u_time)) );
 		s.z += sin(atan(z.y-p.y,z.x-p.x));
 	}
-	return s / 8.0 + 6.0 * u_volume;
+	return s / 8.0 + 4.0 * u_volume;
 }
 
 void main() 
